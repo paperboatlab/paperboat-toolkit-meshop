@@ -1,0 +1,6 @@
+# Optional mesh toolkit (GPL-3.0, VCGlib): triangle mesh blocks on a `mesh` handle.
+# Never bundled (pb#297). An explicit register list keeps this file authoritative when the
+# folder is used in-tree, where the engine's block-folder discovery does not reach.
+name = "meshop"
+optional = true
+register = ["register_meshop"]

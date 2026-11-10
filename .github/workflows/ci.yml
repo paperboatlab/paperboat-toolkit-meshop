@@ -1,0 +1,29 @@
+# Build the toolkit against the (private) engine and run its smoke test.
+name: ci
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: paperboatlab/paperboat
+          path: paperboat
+          token: ${{ secrets.PAPERBOAT_TOKEN }}
+      - name: Install
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ninja-build
+      - name: Build and test
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+            -DPAPERBOAT_SOURCE_DIR="$GITHUB_WORKSPACE/paperboat" \
+            -DPAPERBOAT_WITH_SUNDIALS=OFF
+          cmake --build build
+          ctest --test-dir build --output-on-failure
