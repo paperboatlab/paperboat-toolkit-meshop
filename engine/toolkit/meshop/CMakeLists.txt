@@ -45,6 +45,9 @@ add_library(paperboat::toolkit_meshop ALIAS paperboat_toolkit_meshop)
 target_include_directories(paperboat_toolkit_meshop PUBLIC include)
 # VCGlib is a system header tree: its warnings are not ours to fix.
 target_include_directories(paperboat_toolkit_meshop SYSTEM PRIVATE "${VCGLIB_INCLUDE_DIR}")
+# The engine is C++20. In-tree this folder inherits the engine's standard; standalone the target
+# is defined in this project, so it has to ask for C++20 itself.
+target_compile_features(paperboat_toolkit_meshop PUBLIC cxx_std_20)
 target_link_libraries(paperboat_toolkit_meshop
   PUBLIC paperboat::toolkit
   PRIVATE paperboat::warnings Eigen3::Eigen)

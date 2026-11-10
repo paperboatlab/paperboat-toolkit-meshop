@@ -1,6 +1,6 @@
-# Build the toolkit against the (private) engine and run its smoke test.
-# The engine checkout needs the PAPERBOAT_TOKEN secret (a token with repo scope). Without it the
-# workflow reports a warning and skips, so a fresh clone does not show a red build it cannot fix.
+# Build the toolkit against the engine and run its smoke test.
+# The engine is public, so the checkout needs no token and this job always builds it: a skipped
+# build shows green without testing anything.
 name: ci
 
 on:
@@ -14,33 +14,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Is the engine token set?
-        id: engine
-        env:
-          TOKEN: ${{ secrets.PAPERBOAT_TOKEN }}
-        run: |
-          if [ -n "$TOKEN" ]; then
-            echo "present=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "present=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::PAPERBOAT_TOKEN is not set: the engine build is skipped. Add a token with repo scope to build this toolkit."
-          fi
-
       - uses: actions/checkout@v4
-        if: steps.engine.outputs.present == 'true'
         with:
           repository: paperboatlab/paperboat
           path: paperboat
-          token: ${{ secrets.PAPERBOAT_TOKEN }}
 
       - name: Install
-        if: steps.engine.outputs.present == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends ninja-build
 
       - name: Build and test
-        if: steps.engine.outputs.present == 'true'
         run: |
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
             -DPAPERBOAT_SOURCE_DIR="$GITHUB_WORKSPACE/paperboat" \
