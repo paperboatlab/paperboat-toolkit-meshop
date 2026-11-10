@@ -37,12 +37,16 @@ if(NOT Eigen3_FOUND)
 endif()
 
 # VCGlib is header-only except for its PLY reader/writer (wrap/ply/plylib.cpp).
+# One folder per block: src/meshop/<block>/<block>.cpp. src/ holds the VCGlib side (mesh.cpp,
+# vcg.hpp) and register.cpp.
+file(GLOB PAPERBOAT_MESHOP_BLOCKS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/meshop/*/*.cpp")
 add_library(paperboat_toolkit_meshop
   src/mesh.cpp
-  src/blocks.cpp
+  src/register.cpp
+  ${PAPERBOAT_MESHOP_BLOCKS}
   "${VCGLIB_INCLUDE_DIR}/wrap/ply/plylib.cpp")
 add_library(paperboat::toolkit_meshop ALIAS paperboat_toolkit_meshop)
-target_include_directories(paperboat_toolkit_meshop PUBLIC include)
+target_include_directories(paperboat_toolkit_meshop PUBLIC include PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 # VCGlib is a system header tree: its warnings are not ours to fix.
 target_include_directories(paperboat_toolkit_meshop SYSTEM PRIVATE "${VCGLIB_INCLUDE_DIR}")
 # The engine is C++20. In-tree this folder inherits the engine's standard; standalone the target
