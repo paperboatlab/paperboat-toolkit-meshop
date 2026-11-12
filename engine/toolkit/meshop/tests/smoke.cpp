@@ -1,13 +1,17 @@
-// Smoke test for the meshop package: a unit cube round-trips through every format and the
-// topology checks agree with what a cube is.
+// Smoke test for the meshop package: a unit cube round-trips through every format, the
+// topology checks agree with what a cube is, and the import block reads a tiny OBJ.
 
 #include <cmath>
 #include <cstdio>
+#include <exception>
 #include <filesystem>
+#include <fstream>
 #include <string>
 #include <vector>
 
+#include "paperboat/toolkit/block.hpp"
 #include "paperboat/toolkit/meshop.hpp"
+#include "paperboat/toolkit/registry.hpp"
 
 using paperboat::toolkit::meshop::Poly;
 using paperboat::toolkit::meshop::check;
@@ -78,6 +82,40 @@ int main() {
   open.faces.pop_back();
   expect(!check(open).watertight, "a cube with a face removed is not watertight");
   expect(check(open).holes == 1, "a cube with a face removed has one hole");
+
+  paperboat::toolkit::Registry registry;
+  paperboat::toolkit::meshop::register_meshop(registry);
+  const paperboat::toolkit::Template* importer = registry.find("meshop/import");
+  expect(importer != nullptr, "import: meshop/import is registered");
+  if (importer) {
+    expect(importer->def.type == "import", "import: type is import");
+    expect(importer->def.label == "Import mesh", "import: label is Import mesh");
+    expect(importer->def.kind == paperboat::toolkit::Kind::Source, "import: is a source");
+    expect(importer->def.outputs.size() == 1 && importer->def.outputs[0].type == "mesh",
+           "import: outputs a mesh");
+
+    const std::filesystem::path tiny = dir / "tiny.obj";
+    {
+      std::ofstream obj(tiny);
+      obj << "v 0 0 0\nv 1 0 0\nv 0 1 0\nf 1 2 3\n";
+    }
+    paperboat::toolkit::Config config;
+    config["file"] = tiny.string();
+    const auto block = importer->make({}, config);
+    const auto values = block->step(paperboat::toolkit::Context{}, {});
+    const Poly* mesh = paperboat::toolkit::get_handle<Poly>(values, "mesh", "mesh");
+    expect(mesh != nullptr, "import: puts a mesh on the wire");
+    expect(mesh && mesh->positions.size() == 3 && mesh->faces.size() == 1, "import: reads the triangle");
+
+    bool threw = false;
+    config["file"] = (dir / "missing.obj").string();
+    try {
+      importer->make({}, config);
+    } catch (const std::exception&) {
+      threw = true;
+    }
+    expect(threw, "import: a missing file fails");
+  }
 
   std::printf("\n%s (%d failure(s))\n", failures == 0 ? "PASS" : "FAIL", failures);
   return failures == 0 ? 0 : 1;
