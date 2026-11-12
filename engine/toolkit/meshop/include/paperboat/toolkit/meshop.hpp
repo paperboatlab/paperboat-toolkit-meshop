@@ -2,9 +2,9 @@
 
 // The meshop package: triangle mesh operations as blocks, meshes on the wires.
 //
-// - Flow: `load` puts a mesh (obj, ply, stl, off) on the wire; `stats` reports counts, size,
-//   area and volume; `check` reports watertightness, holes, genus and non-manifold edges;
-//   `save` writes it back.
+// - Flow: `load` and `import` put a mesh (obj, ply, stl, off) on the wire; `stats` reports
+//   counts, size, area and volume; `check` reports watertightness, holes, genus and non-manifold
+//   edges; `save` writes it back.
 // - Station: a Mesh object (a file, set on the Station page). Its linked block puts the mesh on
 //   the Flow page, and the scene draws it through scene::mesh.
 // - Your own blocks take a mesh in with mesh_in() and send one out with mesh_out(), like the

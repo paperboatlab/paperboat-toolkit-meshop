@@ -14,6 +14,7 @@ web bundle (pb#297). The engine stays Apache-2.0 because this folder never enter
 | Block | In → out | Params |
 | --- | --- | --- |
 | `load` | → `mesh` | `file` (obj, ply, stl, off) |
+| `import` | → `mesh` | `file` (obj, ply, stl, off) |
 | `save` | `mesh` → `saved`, `path` | `file` (by extension) |
 | `stats` | `mesh` → `vertices`, `faces`, `area`, `volume`, `dx`, `dy`, `dz`, `cx`, `cy`, `cz` | — |
 | `check` | `mesh` → `watertight`, `holes`, `genus`, `non_manifold`, `components` | — |
@@ -63,7 +64,8 @@ importers need `vcg/complex/complex.h` included first; `src/vcg.hpp` does that.
   `genus` for an STL read differ from the same model in OBJ/PLY. `check` still works.
 - `stats` computes area and volume from the triangles (`volume` is the absolute divergence sum), so
   it needs no normals or topology.
-- The blocks are pure and cacheable except `load`/`save`, which touch the filesystem.
+- The blocks are pure and cacheable except `load`, `import` and `save`, which touch the filesystem.
+  `import` and `load` do the same work; `load` stays for existing descriptors.
 
 ## Roadmap
 
@@ -74,4 +76,5 @@ segmentation, ARAP), `print` (hollow, drain, min wall, fit bed) and `morph` (`t`
 ## Test
 
 `engine/toolkit/meshop/tests/smoke.cpp` builds a unit cube, checks its area, topology and genus,
-round-trips it through obj/ply/stl/off, and removes a face to confirm that `check` sees the hole.
+round-trips it through obj/ply/stl/off, removes a face to confirm that `check` sees the hole, and
+runs the `import` block over a tiny OBJ (a missing file fails).
