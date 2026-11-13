@@ -2,5 +2,6 @@
 # Never bundled (pb#297). An explicit register list keeps this file authoritative when the
 # folder is used in-tree, where the engine's block-folder discovery does not reach.
 name = "meshop"
+version = "0.1.0"
 optional = true
 register = ["register_meshop"]
