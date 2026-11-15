@@ -9,19 +9,10 @@ algorithms behind MeshLab's filter menu, without Qt, without the plugin ABI, and
 **never bundled**: it is not in the `.deb`, `.rpm`, `.tar.gz`, `.zip`, npm packages, Python wheel or
 web bundle (pb#297). The engine stays Apache-2.0 because this folder never enters an artifact.
 
-## What it does now
-
-| Block | In → out | Params |
-| --- | --- | --- |
-| `load` | → `mesh` | `file` (obj, ply, stl, off) |
-| `import` | → `mesh` | `file` (obj, ply, stl, off) |
-| `save` | `mesh` → `saved`, `path` | `file` (by extension) |
-| `stats` | `mesh` → `vertices`, `faces`, `area`, `volume`, `dx`, `dy`, `dz`, `cx`, `cy`, `cz` | — |
-| `check` | `mesh` → `watertight`, `holes`, `genus`, `non_manifold`, `components` | — |
-| station object `mesh` | a file, drawn in the scene, linked block gives `mesh` | `file`, `color`, `scale` |
-
-`check` is the print inspection: a closed surface has `watertight = 1`, `holes = 0` and
-`non_manifold = 0`; `genus` counts handles.
+**Docs:** <https://paperboatlab.github.io/toolkits/meshop/>, also in the Help window (F1) of
+Paperboat. Their sources live with the code: `engine/toolkit/meshop/docs/` for the toolkit's pages,
+and a block's notes in its folder (`src/meshop/<block>/doc.rst`); a block's ports and params come
+from the catalog, so write only what the catalog can't say.
 
 ## Install
 
@@ -55,23 +46,6 @@ ctest --test-dir build --output-on-failure
 Dependencies are fetched at configure time when they are not installed: VCGlib `2025.07`
 (header-only, plus its `wrap/ply/plylib.cpp`) and Eigen `5.0.1` (header-only). VCGlib's `wrap/`
 importers need `vcg/complex/complex.h` included first; `src/vcg.hpp` does that.
-
-## Notes
-
-- A `mesh` wire carries plain arrays (`meshop::Poly`: float positions, uint32 triangles). A backend
-  can build one without linking VCGlib; the handle kind is `"mesh"`.
-- STL has no vertex sharing: its importer yields three vertices per triangle, so `vertices` and
-  `genus` for an STL read differ from the same model in OBJ/PLY. `check` still works.
-- `stats` computes area and volume from the triangles (`volume` is the absolute divergence sum), so
-  it needs no normals or topology.
-- The blocks are pure and cacheable except `load`, `import` and `save`, which touch the filesystem.
-  `import` and `load` do the same work; `load` stays for existing descriptors.
-
-## Roadmap
-
-The rest of the epic (pb#296): `clean` (weld, drop degenerate, fill holes, orient), `shape`
-(decimate, remesh, smooth, subdivide), `exact` (CGAL booleans, offsets, watertight wrap,
-segmentation, ARAP), `print` (hollow, drain, min wall, fit bed) and `morph` (`t` on the clock).
 
 ## Test
 
