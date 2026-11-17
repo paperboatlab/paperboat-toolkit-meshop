@@ -1,55 +1,44 @@
 # paperboat-toolkit-meshop
 
-The optional mesh toolkit for [Paperboat](https://github.com/paperboatlab/paperboat): triangle mesh
-blocks on a `mesh` handle, built on [VCGlib](https://github.com/cnr-isti-vclab/vcglib) — the
-algorithms behind MeshLab's filter menu, without Qt, without the plugin ABI, and without
-`meshlabserver`.
+The optional triangle-mesh toolkit for [Paperboat](https://github.com/paperboatlab/paperboat): mesh
+loading, exporting, topology statistics and printability checks on a `mesh` handle, built on
+[VCGlib](https://github.com/cnr-isti-vclab/vcglib) without Qt or `meshlabserver`. Because VCGlib is
+GPL-3.0, this toolkit is GPL-3.0, installed by the user and never bundled into Paperboat release
+artifacts.
 
-**Licence: GPL-3.0-only.** VCGlib is GPL-3.0, so this toolkit is too. It is installed by the user and
-**never bundled**: it is not in the `.deb`, `.rpm`, `.tar.gz`, `.zip`, npm packages, Python wheel or
-web bundle (pb#297). The engine is GPL-3.0-only as well; the bundle rule keeps every optional
-toolkit, whatever its licence, out of the artifact.
-
-**Docs:** <https://paperboatlab.github.io/toolkits/meshop/>, also in the Help window (F1) of
-Paperboat. Their sources live with the code: `engine/toolkit/meshop/docs/` for the toolkit's pages,
-and a block's notes in its folder (`src/meshop/<block>/doc.rst`); a block's ports and params come
-from the catalog, so write only what the catalog can't say.
+**Docs:** <https://paperboatlab.github.io/toolkits/meshop/> (sources in
+[`engine/toolkit/meshop/docs/`](engine/toolkit/meshop/docs/) and each block's `doc.rst`, also in
+the Help window (F1))
 
 ## Install
 
-Overlay this repository onto a Paperboat checkout so the toolkit sits at `engine/toolkit/meshop/`
-(the engine discovers it from its `toolkit.toml`), or use the installer:
-
 ```sh
-paperboat toolkit install meshop --repo https://github.com/paperboatlab/paperboat-toolkit-meshop
-paperboat backends
+paperboat toolkit install meshop --repo https://github.com/paperboatlab/paperboat-toolkit-meshop.git
 ```
 
-Then in your backend's `main`:
-
-```cpp
-tk::Registry r = tk::builtins();
-tk::meshop::register_meshop(r);
-```
-
-and import `"meshop"` in `descriptor.toml`. A backend that lists it in `backend.toml`
-(`toolkits = ["meshop"]`) is checked for it by `paperboat check`.
+Declare `toolkits = ["meshop"]` in `backend.toml` and import `"meshop"` in `descriptor.toml`.
 
 ## Build
 
+Against a Paperboat checkout or installed SDK (`-DCMAKE_PREFIX_PATH=<prefix>`):
+
 ```sh
-# against a Paperboat checkout, or a installed SDK (`-DCMAKE_PREFIX_PATH=<prefix>`)
 cmake -S . -B build -G Ninja -DPAPERBOAT_SOURCE_DIR=../paperboat
 cmake --build build
+```
+
+## Check
+
+```sh
 ctest --test-dir build --output-on-failure
 ```
 
-Dependencies are fetched at configure time when they are not installed: VCGlib `2025.07`
-(header-only, plus its `wrap/ply/plylib.cpp`) and Eigen `5.0.1` (header-only). VCGlib's `wrap/`
-importers need `vcg/complex/complex.h` included first; `src/vcg.hpp` does that.
+## CI
 
-## Test
+[![ci](https://github.com/paperboatlab/paperboat-toolkit-meshop/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/paperboatlab/paperboat-toolkit-meshop/actions/workflows/ci.yml?query=branch%3Adev) builds the toolkit against `paperboat` (`dev`) and runs the mesh smoke tests.
 
-`engine/toolkit/meshop/tests/smoke.cpp` builds a unit cube, checks its area, topology and genus,
-round-trips it through obj/ply/stl/off, removes a face to confirm that `check` sees the hole, and
-runs the `import` block over a tiny OBJ (a missing file fails).
+## Licence
+
+GNU General Public License version 3 (see [LICENSE](LICENSE)). VCGlib is GPL-3.0, so this toolkit
+is too; it is never bundled into Paperboat packages (`pb#297`), and the Paperboat engine is
+GPL-3.0-only as well.
