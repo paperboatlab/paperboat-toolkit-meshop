@@ -5,9 +5,10 @@ blocks on a `mesh` handle, built on [VCGlib](https://github.com/cnr-isti-vclab/v
 algorithms behind MeshLab's filter menu, without Qt, without the plugin ABI, and without
 `meshlabserver`.
 
-**Licence: GPL-3.0.** VCGlib is GPL-3.0, so this toolkit is too. It is installed by the user and
+**Licence: GPL-3.0-only.** VCGlib is GPL-3.0, so this toolkit is too. It is installed by the user and
 **never bundled**: it is not in the `.deb`, `.rpm`, `.tar.gz`, `.zip`, npm packages, Python wheel or
-web bundle (pb#297). The engine stays Apache-2.0 because this folder never enters an artifact.
+web bundle (pb#297). The engine is GPL-3.0-only as well; the bundle rule keeps every optional
+toolkit, whatever its licence, out of the artifact.
 
 **Docs:** <https://paperboatlab.github.io/toolkits/meshop/>, also in the Help window (F1) of
 Paperboat. Their sources live with the code: `engine/toolkit/meshop/docs/` for the toolkit's pages,

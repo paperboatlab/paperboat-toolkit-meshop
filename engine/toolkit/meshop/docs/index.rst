@@ -16,7 +16,7 @@ Licence
 
 **GPL-3.0.** VCGlib is GPL-3.0, so this toolkit is too. It is installed by the user and **never
 bundled**: it is not in the ``.deb``, ``.rpm``, ``.tar.gz``, ``.zip``, npm packages, Python wheel or
-web bundle. The engine stays Apache-2.0 because this folder never enters an artifact.
+web bundle. The engine is GPL-3.0-only as well; this folder never enters an artifact.
 
 Meshes on the wires
 -------------------
