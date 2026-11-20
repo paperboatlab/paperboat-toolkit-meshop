@@ -5,14 +5,14 @@ Install
 
    paperboat toolkit install meshop --repo https://github.com/paperboatlab/paperboat-toolkit-meshop
 
-A C++ backend registers it next to the builtins:
+A C++ station registers it next to the builtins:
 
 .. code-block:: cpp
 
    tk::Registry r = tk::builtins();
    tk::meshop::register_meshop(r);
 
-and imports ``"meshop"`` in its ``descriptor.toml``. A backend that lists it in ``backend.toml``
+and imports ``"meshop"`` in its ``descriptor.toml``. A station that lists it in ``station.toml``
 (``toolkits = ["meshop"]``) is checked for it by ``paperboat check``.
 
 Building it yourself fetches what is not installed at configure time: VCGlib ``2025.07``

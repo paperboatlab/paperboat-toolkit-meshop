@@ -11,7 +11,7 @@
 //   examples' inspectors.
 //
 // Optional, and GPL-3.0: it links VCGlib. Never bundled (pb#297): install it with
-// `paperboat toolkit install meshop`, and a backend that lists it in backend.toml is checked by
+// `paperboat toolkit install meshop`, and a station that lists it in station.toml is checked by
 // `paperboat check`.
 //
 //   tk::Registry r = tk::builtins();
