@@ -2,7 +2,7 @@
 
 // The VCGlib side of meshop: the mesh type behind a `mesh` handle, its conversions, and the
 // topology checks. VCGlib wants its own vertex/face component lists; the wire type (Poly) stays
-// plain arrays so a backend can build one without linking VCGlib. (The namespace is `detail`, not
+// plain arrays so a station can build one without linking VCGlib. (The namespace is `detail`, not
 // `vcg`: inside `meshop`, a nested `vcg` would shadow the library's own namespace.)
 
 #include <array>

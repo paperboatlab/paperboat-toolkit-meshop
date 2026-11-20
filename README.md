@@ -16,7 +16,7 @@ the Help window (F1))
 paperboat toolkit install meshop --repo https://github.com/paperboatlab/paperboat-toolkit-meshop.git
 ```
 
-Declare `toolkits = ["meshop"]` in `backend.toml` and import `"meshop"` in `descriptor.toml`.
+Declare `toolkits = ["meshop"]` in `station.toml` and import `"meshop"` in `descriptor.toml`.
 
 ## Build
 

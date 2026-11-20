@@ -21,7 +21,7 @@ web bundle. The engine is GPL-3.0-only as well; this folder never enters an arti
 Meshes on the wires
 -------------------
 
-A ``mesh`` wire carries plain arrays (float positions, uint32 triangles), so a backend can build one
+A ``mesh`` wire carries plain arrays (float positions, uint32 triangles), so a station can build one
 without linking VCGlib; the handle kind is ``"mesh"``. The station object ``mesh`` draws a file in
 the scene (``file``, ``color``, ``scale``) and its linked block gives the ``mesh``.
 
