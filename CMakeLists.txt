@@ -14,7 +14,7 @@ include(FetchContent)
 if(NOT DEFINED PAPERBOAT_SOURCE_DIR OR NOT EXISTS "${PAPERBOAT_SOURCE_DIR}/engine/CMakeLists.txt")
   message(STATUS "PAPERBOAT_SOURCE_DIR not set; fetching paperboat from GitHub")
   FetchContent_Declare(paperboat
-    GIT_REPOSITORY https://github.com/paperboatlab/paperboat.git
+    GIT_REPOSITORY https://github.com/paperboatlab/paperboat-legacy.git
     GIT_TAG dev)
   FetchContent_MakeAvailable(paperboat)
   set(PAPERBOAT_SOURCE_DIR "${paperboat_SOURCE_DIR}" CACHE PATH "Path to the paperboat source tree")
