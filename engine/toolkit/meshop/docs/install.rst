@@ -3,7 +3,7 @@ Install
 
 .. code-block:: sh
 
-   paperboat toolkit install meshop --repo https://github.com/paperboatlab/paperboat-toolkit-meshop
+   paperboat toolkit install meshop --repo https://github.com/paperboatlab/simplicial-toolkit-meshop
 
 A C++ station registers it next to the builtins:
 

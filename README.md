@@ -1,4 +1,4 @@
-# paperboat-toolkit-meshop
+# simplicial-toolkit-meshop
 
 The optional triangle-mesh toolkit for [Paperboat](https://github.com/paperboatlab/paperboat): mesh
 loading, exporting, topology statistics and printability checks on a `mesh` handle, built on
@@ -13,7 +13,7 @@ the Help window (F1))
 ## Install
 
 ```sh
-paperboat toolkit install meshop --repo https://github.com/paperboatlab/paperboat-toolkit-meshop.git
+paperboat toolkit install meshop --repo https://github.com/paperboatlab/simplicial-toolkit-meshop.git
 ```
 
 Declare `toolkits = ["meshop"]` in `station.toml` and import `"meshop"` in `descriptor.toml`.
@@ -35,7 +35,7 @@ ctest --test-dir build --output-on-failure
 
 ## CI
 
-[![ci](https://github.com/paperboatlab/paperboat-toolkit-meshop/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/paperboatlab/paperboat-toolkit-meshop/actions/workflows/ci.yml?query=branch%3Adev) builds the toolkit against `paperboat` (`dev`) and runs the mesh smoke tests.
+[![ci](https://github.com/paperboatlab/simplicial-toolkit-meshop/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/paperboatlab/simplicial-toolkit-meshop/actions/workflows/ci.yml?query=branch%3Adev) builds the toolkit against `paperboat` (`dev`) and runs the mesh smoke tests.
 
 ## Licence
 
