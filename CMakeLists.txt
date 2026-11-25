@@ -1,4 +1,4 @@
-# paperboat-toolkit-meshop: mesh operations for Paperboat.
+# simplicial-toolkit-meshop: mesh operations for Paperboat.
 #
 # Builds paperboat::toolkit_meshop on VCGlib. Two modes:
 #   1. In-tree: copy engine/toolkit/meshop into a paperboat checkout at engine/toolkit/meshop/
