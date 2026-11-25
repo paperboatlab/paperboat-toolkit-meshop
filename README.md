@@ -6,7 +6,7 @@ loading, exporting, topology statistics and printability checks on a `mesh` hand
 GPL-3.0, this toolkit is GPL-3.0, installed by the user and never bundled into Paperboat release
 artifacts.
 
-**Docs:** <https://paperboatlab.github.io/toolkits/meshop/> (sources in
+**Docs:** <https://paperboatlab.org/toolkits/meshop/> (sources in
 [`engine/toolkit/meshop/docs/`](engine/toolkit/meshop/docs/) and each block's `doc.rst`, also in
 the Help window (F1))
 
